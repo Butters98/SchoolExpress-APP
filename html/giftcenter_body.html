@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/common.css" />
+    <link rel="stylesheet" type="text/css" href="../css/idangerous.swiper.css">
+
+
+    <style>
+        html,body{height:100%;background-color: #eee;}
+        .h10 {height: 10px;}
+
+        /* 头部导航样式 */
+
+        .header {position: relative;height: 50px;line-height: 50px;background-color: #3993cf;}
+        .header .left  {position: absolute;left: 0;height: 50px;}
+        .header .left  .logoleft {height: 20px;vertical-align: top; margin-top: 15px;}
+        .header .left  .logo {height: 46px; vertical-align: top; margin-top: 2px; margin-left: -10px;}
+        .header .left  .title {font-size: 20px; color: #fff; margin-left: -10px;padding-right: 10px;}
+
+        .header .center {position: absolute; left: 60px; width: 60px;}
+        .header .center span {color: #fff;}
+        .header .center img {width: 8px; bottom: 5px; position: absolute; right: 0px;}
+
+        .header .right {position: absolute;right: 0;height: 50px;}
+        .header .right img {height: 30px;padding: 10px;}
+
+        .swiper-slide img {width: 100%;}
+
+
+
+        /* 条目总体样式 */
+        .item {display: table; height: 70px; width: 100%;}
+        .item .itemlogo , .item .itemshelf {display: table-cell; vertical-align: middle;}
+
+        .item .itemlogo {width: 70px;}
+        .item .itemlogo img  {margin-left: 10px;width: 40px;}
+        .item .itemshelf .shelfinfo01 {font-size: 20px;color: #AFAFAF;}
+
+        /* 条目特例 */
+        .shelf2 .userlogo img {width: 50px;}
+        .favorable .itemshelf .shelfinfo01 {font-size: 16px;color: #F97B02;}
+        .favorable .itemshelf .shelfinfo02 {font-size: 12px;color: #666;margin-top: 5px;}
+        .nearby .itemshelf .shelfinfo01 {font-size: 16px;color: #4CAD35;}
+        .nearby .itemshelf .shelfinfo02 {font-size: 12px;color: #666;margin-top: 5px;}
+
+        /* 第三部分 */
+        .section3 .item {background-color: #fff;position: relative;border-bottom: 1px solid #d3d3d3;}
+        .section3 .item .itemlogo {position: absolute; top: 10px;}
+        .section3 .itemshelf {margin-left: 70px;display: block;/* 不再显示为table-cell */}
+        .section3 .item .userlogo img {width: 40px;padding: 2px; border: 1px solid #e7e7e7;border-radius: 2px;}
+        .section3 .itemshelf .shelfinfo01 {color: #000;font-size: 16px;line-height: 18px;margin-top: 10px;}
+        .section3 .itemshelf .ordering{color: #fff;font-size: 12px;background-color: #5bb06c;padding: 2px 4px;display: inline-block;}
+        .section3 .itemshelf .shelfinfo03 {color: #999;font-size: 12px;padding: 10px 0;}
+
+
+        .section3 .itemshelf .shelfinfo04 {color: #999;font-size: 12px;padding: 10px 0;}
+        .section3 .itemshelf .shelfinfo05 {color: #999;font-size: 12px;padding: 10px 0 ;}
+        .section3 .itemshelf .shelfinfo06 {color: #999;font-size: 12px;padding: 10px 0;}
+        .section3 .itemshelf .btn {margin-left:65%;margin-bottom:10px;}
+        .section3 .itemshelf .btn {background: #4DC060;height: 30px;width:80px; text-align: center; line-height: 25px; font-size: 15px;margin-top: 20px;border-radius: 5px;padding-top:8px}
+        .section3 .itemshelf .btn span {color: #fff;}
+
+        /* 标题栏小图标 */
+        .section3 .itemshelf .shelfinfo01 .pei {color: #fff;font-size: 12px;background-color: #82782f;margin-left: 5px;padding: 1px;border-radius: 3px;}
+        .section3 .itemshelf .shelfinfo01 .ticket {color: #fff;font-size: 12px;background-color: #3585b7;margin-left: 5px;padding: 2px;border-radius: 3px;}
+        .section3 .itemshelf .shelfinfo01 .fu {color: #fff;font-size: 12px;background-color: #e5322d;margin-left: 5px;padding: 2px;border-radius: 3px;}
+        .section3 .itemshelf .shelfinfo01 .compensate {color: #fff;font-size: 12px;background-color: #2768ba;margin-left: 5px;padding: 2px;border-radius: 3px;}
+        .section3 .itemshelf .shelfinfo01 .new {color: #fff;font-size: 12px;background-color: #e5322d;margin-left: 5px;padding: 2px;border-radius: 3px;}
+        .section3 .itemshelf .shelfinfo04 .jian {color: #fff;font-size: 12px;background-color: #cd22e2;padding: 1px;border-radius: 3px;margin-right: 5px;}
+        .section3 .itemshelf .shelfinfo05 .quatity {color: #fff;font-size: 12px;background-color: #dc0414;padding: 1px;border-radius: 3px;margin-right: 5px;}
+
+        /* 悬浮样式 */
+        .itemhover {background-color: #eee !important;}
+        .headerhover {background-color: #36A8DC;}
+
+    </style>
+</head>
+<body>
+    <!-- 第三部分 -->
+    <!-- 如何复用listitem，1.最简单的样式不变，直接复制  2.复制以后修改其中某一行的样式，最外层用div包裹给予新class，即可隔离原有的样式 -->
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/idangerous.swiper.js"></script>
+<script type="text/javascript" src="../script/swipe.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+
+
+    function openNewWin (type) {
+        api.openWin ({
+            name: type,
+            url: './'+type+'.html',
+            rect:{
+                x:0,
+                y:0,
+                w:'auto',
+                h:'auto'
+            },
+            bounces: false,
+            delay:200
+        });
+    }
+
+    apiready = function  () {
+
+  var model = api.require('model');
+
+      model.config
+      model.config({
+          appKey: '4BF88D16-1037-058A-538A-FDD73D844EB6',
+          host: 'https://d.apicloud.com'
+      });
+createwodeDiv();
+        api.setRefreshHeaderInfo({
+            visible: true,
+            bgColor: 'rgba(0,0,0,0)',
+            textColor: '#666',
+            textDown: '下拉刷新',
+            textUp: '释放刷新'
+        }, function(ret, err){
+            loadData();
+            location.reload();
+        });
+    }
+
+    function loadData(){
+        api.refreshHeaderLoadDone();
+
+    }
+
+
+
+
+    function createwodeDiv(){
+      var model = api.require('model');
+      var query = api.require('query');
+      var user_id=$api.getStorage('user_id');
+      query.createQuery(function(ret,err){
+        if(ret && ret.qid){
+          queryId=ret.qid;
+
+          query.whereEqual
+          query.whereEqual({
+            qid:queryId,
+            value:user_id,
+            column:'receiverid'
+          });
+          if(ret)
+          {
+            model.count({
+            class:'received_message',
+            qid:queryId
+         },function(ret,err){
+             if(ret){
+               var a=ret.count
+                 alert( a);
+
+                          model.findAll
+                          model.findAll({
+                              class: 'received_message',
+                              qid: queryId
+                          },function(ret,err){
+
+                              for (var i = 0; i < a; i++) {
+                                var item = document.createElement('div');//创建div
+                               item.style.cssText="background-color: #fff;position: relative;display: table; height: 70px; width: 100%;";
+                               item.id=i;
+                               document.body.appendChild(item);
+                               var itemshelf = document.createElement('div');
+                               itemshelf.style.cssText="margin-left: 30px;display: block;";
+                               itemshelf.id='itemshelf';
+                               document.getElementById(i).appendChild(itemshelf);
+                               var shelfinfo01 = document.createElement('div');
+                               shelfinfo01.style.cssText="color: #000;font-size: 16px;line-height: 18px;margin-top: 10px";
+                               shelfinfo01.innerHTML="快递公司:";
+                               shelfinfo01.id='shelfinfo01'+i;
+                               document.getElementById("itemshelf").appendChild(shelfinfo01);
+                               var shelfinfo02 =  document.createElement('div');
+                                 shelfinfo02.style.cssText="color: #fff;font-size: 12px;background-color: #5bb06c;padding: 2px 4px;display: inline-block";
+                                   shelfinfo02.innerHTML="取件号:";
+                                   shelfinfo02.id='shelfinfo02'+i;
+                                   document.getElementById("itemshelf").appendChild(shelfinfo02);
+                                   var shelfinfo03 =  document.createElement('div');
+                                     shelfinfo03.style.cssText="color: #999;font-size: 12px;padding: 10px 0;";
+                                     shelfinfo03.innerHTML="姓名:";
+                                     shelfinfo03.id='shelfinfo03'+i;
+                                       document.getElementById("itemshelf").appendChild(shelfinfo03);
+                                       var shelfinfo04 = document.createElement('div');
+                                       shelfinfo04.style.cssText="color: #999;font-size: 12px;padding: 10px 0;";
+                                       shelfinfo04.innerHTML="手机号:";
+                                       shelfinfo04.id='shelfinfo04'+i;
+                                       document.getElementById("itemshelf").appendChild(shelfinfo04);
+
+                                       var shelfinfo05 = document.createElement('div');
+                                       shelfinfo05.style.cssText="color: #999;font-size: 12px;padding: 10px 0;";
+                                       shelfinfo05.innerHTML="宿舍号:";
+                                       shelfinfo05.id='shelfinfo05'+i;
+                                       document.getElementById("itemshelf").appendChild(shelfinfo05);
+
+                                       var shelfinfo06 = document.createElement('div');
+                                       shelfinfo06.style.cssText="color: #999;font-size: 12px;padding: 10px 0;";
+                                       shelfinfo06.innerHTML="备注:";
+                                       shelfinfo06.id='shelfinfo06'+i;
+                                       document.getElementById("itemshelf").appendChild(shelfinfo06);
+                                       var shelfinfo07 = document.createElement('div');
+                                       shelfinfo07.style.cssText="border-bottom: 1px solid #d3d3d3;";
+
+                                       shelfinfo07.id='shelfinfo07'+i;
+                                       document.getElementById("itemshelf").appendChild(shelfinfo07);
+                                var a1_01 = $api.byId('shelfinfo01'+i);//获取到需要填充的div
+                                var a1_02 = $api.byId('shelfinfo02'+i);
+                                var a1_03 = $api.byId('shelfinfo03'+i);
+                                var a1_04 = $api.byId('shelfinfo04'+i);
+                                var a1_05 = $api.byId('shelfinfo05'+i);
+                                var a1_06 = $api.byId('shelfinfo06'+i);
+
+                                     $api.append(a1_01,"<div>"+ret[i].expressname+"</div>");
+                                     $api.append(a1_02,"<div>"+ret[i].expressnum+"</div>");
+                                       $api.append(a1_03,"<div>"+ret[i].name+"</div>");
+                                        $api.append(a1_04,"<div>"+ret[i].phonenum+"</div>");
+                                         $api.append(a1_05,"<div>"+ret[i].dormnum+"</div>");
+                                          $api.append(a1_06,"<div>"+ret[i].remark+"</div>");
+
+                              }
+
+
+
+
+                          });
+
+
+
+
+               }
+         });
+          }
+
+        }
+      });
+
+    }
+</script>
+</html>
