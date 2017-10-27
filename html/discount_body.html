@@ -192,7 +192,16 @@
             textUp: '释放刷新'
         }, function(ret, err){
             loadData();
+            api.showProgress({
+                style: 'default',
+                animationType: 'fade',
+                title: '努力加载中...',
+                text: '先喝杯茶...',
+                modal: false
+            });
             location.reload();
+            api.hideProgress();
+            
         });
     }
 
@@ -244,7 +253,16 @@ var user_id=$api.getStorage('user_id');
                                           $api.setStorage('beijiedanexpressnum', ret[i].expressnum);
                           }
                           else {
+                            api.showProgress({
+                                style: 'default',
+                                animationType: 'fade',
+                                title: '努力加载中...',
+                                text: '先喝杯茶...',
+                                modal: false
+                            });
                             location.reload();
+                            api.hideProgress();
+
                           }
               });
 
@@ -304,7 +322,7 @@ var user_id=$api.getStorage('user_id');
                             class: 'received_message',
                             qid: queryId
                         },function(ret,err){
-                          alert(ret[0].id);
+
                           var receivedid=ret[0].id;
                           model.updateById
                           model.updateById({

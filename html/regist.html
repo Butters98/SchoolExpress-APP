@@ -83,7 +83,9 @@
 	<div class="divider"></div>
 	<form action="">
 		<div class="item email"><input type="text" placeholder="用户名/邮箱" id="username"></div>
-		<div class="item passwd"><input type="password" placeholder="密码" id="password">
+		<div class="item passwd"><input type="password" placeholder="请输入密码" id="password">
+		</div>
+		<div class="item passwd"><input type="password" placeholder="请再输入一遍密码" id="passwordrepeat">
 		</div>
 
 		<div class="btn" onclick="register()" tapmode="submit-hover"><span type="submit">注册</span></div>
@@ -137,9 +139,11 @@ function register()
         modal: false
     });
     var model = api.require('model');
+		var query = api.require('query');
     var username=$("#username").val();
     var password=$("#password").val();
     var user = api.require("user");
+		var passwordrepeat = $api.byId('passwordrepeat').value;
     user.register
     user.register({
       username:$api.byId('username').value,
@@ -148,20 +152,53 @@ function register()
     },function(ret,err){
 
       api.hideProgress();
-      if(ret)
+      if(ret && password == passwordrepeat)
       {
-        api.alert({
-            title: '注册成功',
-            msg: '确定',
-        }, function(ret, err){
-            if( ret.buttonIndex==1 ){
-                 api.closeWin();
-            }
-        });
+
+				query.createQuery
+				query.createQuery(function(ret,err){
+							  queryId=ret.qid;
+							query.whereEqual
+							query.whereEqual({
+								qid:queryId,
+								value:$api.byId('username').value,
+								column:'username'
+							});
+							model.findAll
+							model.findAll({
+							    class: 'user',
+							    qid: queryId
+							},function(ret,err){
+
+								var checkuserid = $api.byId('username').value;
+									if (ret[0].username==checkuserid) {
+											api.alert({
+											    title: '已存在相同账号',
+											    msg: '请换个用户名',
+											}, function(ret, err){
+
+											});
+
+									}
+									else {
+										api.alert({
+												title: '注册成功',
+												msg: '确定',
+										}, function(ret, err){
+												if( ret.buttonIndex==1 ){
+														 api.closeWin();
+												}
+										});
+									}
+							});
+
+
+
+				});
 
       }else {
         api.toast({
-            msg: '网络错误',
+            msg: '密码输入错误',
             duration: 2000,
             location: 'middle'
         });

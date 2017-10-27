@@ -166,7 +166,8 @@ createwodeDiv();
                               qid: queryId
                           },function(ret,err){
 
-                              for (var i = 0; i < a; i++) {
+                              for ( var i = 0; i < a; i++) {
+
                                 var item = document.createElement('div');//创建div
                                item.style.cssText="background-color: #fff;position: relative;display: table; height: 70px; width: 100%;";
                                item.id=i;
@@ -181,7 +182,7 @@ createwodeDiv();
                                shelfinfo01.id='shelfinfo01'+i;
                                document.getElementById("itemshelf").appendChild(shelfinfo01);
                                var shelfinfo02 =  document.createElement('div');
-                                 shelfinfo02.style.cssText="color: #fff;font-size: 12px;background-color: #5bb06c;padding: 2px 4px;display: inline-block";
+                                 shelfinfo02.style.cssText="color: #999;font-size: 12px;padding: 10px 0;";
                                    shelfinfo02.innerHTML="取件号:";
                                    shelfinfo02.id='shelfinfo02'+i;
                                    document.getElementById("itemshelf").appendChild(shelfinfo02);
@@ -208,16 +209,28 @@ createwodeDiv();
                                        shelfinfo06.id='shelfinfo06'+i;
                                        document.getElementById("itemshelf").appendChild(shelfinfo06);
                                        var shelfinfo07 = document.createElement('div');
-                                       shelfinfo07.style.cssText="border-bottom: 1px solid #d3d3d3;";
-
+                                       shelfinfo07.style.cssText="color: #fff;font-size: 15px;background-color: #EE0000;padding: 2px 4px;display: inline-block";
+                                       shelfinfo07.innerHTML="订单状态:";
                                        shelfinfo07.id='shelfinfo07'+i;
                                        document.getElementById("itemshelf").appendChild(shelfinfo07);
+                                       var shelfinfo09 = document.createElement('div');
+                                      shelfinfo09.style.cssText="color: #fff;margin-left:65%;margin-bottom:10px;background: #4DC060;height: 30px;width:80px; text-align: center; line-height: 25px; font-size: 15px;margin-top: 20px;border-radius: 5px;padding-top:8px";
+
+                                      shelfinfo09.id='shelfinfo09'+i;
+
+                                      document.getElementById("itemshelf").appendChild(shelfinfo09);
+                                       var shelfinfo08 = document.createElement('div');
+                                       shelfinfo08.style.cssText="border-bottom: 1px solid #d3d3d3;margin-top:3px";
+
+                                       shelfinfo08.id='shelfinfo08'+i;
+                                       document.getElementById("itemshelf").appendChild(shelfinfo08);
                                 var a1_01 = $api.byId('shelfinfo01'+i);//获取到需要填充的div
                                 var a1_02 = $api.byId('shelfinfo02'+i);
                                 var a1_03 = $api.byId('shelfinfo03'+i);
                                 var a1_04 = $api.byId('shelfinfo04'+i);
                                 var a1_05 = $api.byId('shelfinfo05'+i);
                                 var a1_06 = $api.byId('shelfinfo06'+i);
+                                  var a1_07 = $api.byId('shelfinfo07'+i);
 
                                      $api.append(a1_01,"<div>"+ret[i].expressname+"</div>");
                                      $api.append(a1_02,"<div>"+ret[i].expressnum+"</div>");
@@ -225,6 +238,24 @@ createwodeDiv();
                                         $api.append(a1_04,"<div>"+ret[i].phonenum+"</div>");
                                          $api.append(a1_05,"<div>"+ret[i].dormnum+"</div>");
                                           $api.append(a1_06,"<div>"+ret[i].remark+"</div>");
+
+
+
+                                          if(ret[i].receiverid!=null){
+
+                                          shelfinfo07.style.cssText="color: #fff;font-size: 15px;background-color: #5bb06c;padding: 2px 4px;display: inline-block";
+                                          $api.append(a1_07,"<div>"+''+"</div>");
+                                          $api.append(a1_07,"已被 ");
+                                          $api.append(a1_07,ret[i].receiverid);
+                                          $api.append(a1_07," 接单");
+                                          (document.getElementById('shelfinfo09'+i).onclick = function(){finish(arguments.callee.i);}).i=i;
+                                          shelfinfo09.innerHTML="完成订单";
+                                        }
+                                        else {
+                                          $api.append(a1_07,"<div>"+'未接单'+"</div>");
+                                        (document.getElementById('shelfinfo09'+i).onclick = function(){cancle(arguments.callee.i);}).i=i;
+                                          shelfinfo09.innerHTML="取消订单";
+                                        }
 
                               }
 
@@ -244,5 +275,163 @@ createwodeDiv();
       });
 
     }
+
+    function finish(i){
+      var model = api.require('model');
+      var query = api.require('query');
+      var user_id=$api.getStorage('user_id');
+         api.confirm({
+             title: '完成订单',
+             msg: '确定完成订单吗？',
+             buttons: ['确定', '取消']
+         }, function(ret, err){
+             if( ret ){
+                  if(ret.buttonIndex==1)
+                  {
+                     query.createQuery
+                     query.createQuery(function(ret,err){
+                             if(ret && ret.qid){
+                                 queryId=ret.qid;
+                               query.whereEqual
+                               query.whereEqual({
+                                 qid:queryId,
+                                 value:user_id,
+                                 column:'userid'
+                               });
+
+
+                               model.findAll
+                               model.findAll({
+                                   class: 'received_message',
+                                   qid: queryId
+                               },function(ret,err){
+                              //   alert(i);
+                                // var message1_id=$api.getStorage('message1_id');
+                              //  alert(ret[i].userid);
+                              //  alert(ret[i].expressname);
+                              //  alert(ret[i].expressnum);
+                                 var receivedid=ret[i].id;
+                              //   alert(receivedid);
+                              model.deleteById
+                               model.deleteById({
+                                   class: 'received_message',
+                                   id: receivedid
+                               },function(ret,err){
+                                 api.showProgress({
+                                     style: 'default',
+                                     animationType: 'fade',
+                                     title: '努力加载中...',
+                                     text: '先喝杯茶...',
+                                     modal: false
+                                 });
+                                       location.reload();
+                                       api.hideProgress();
+                               });
+
+
+                               });
+
+
+                             }
+
+
+                     });
+
+
+                  }
+             }else{
+
+             }
+         });
+
+     }
+
+     function cancle(i){
+       var model = api.require('model');
+       var query = api.require('query');
+       var user_id=$api.getStorage('user_id');
+          api.confirm({
+              title: '取消订单',
+              msg: '确定取消订单吗？',
+              buttons: ['确定', '取消']
+          }, function(ret, err){
+              if( ret ){
+                   if(ret.buttonIndex==1)
+                   {
+                      query.createQuery
+                      query.createQuery(function(ret,err){
+                              if(ret && ret.qid){
+                                  queryId=ret.qid;
+                                query.whereEqual
+                                query.whereEqual({
+                                  qid:queryId,
+                                  value:user_id,
+                                  column:'userid'
+                                });
+
+                                model.findAll
+                                model.findAll({
+                                    class: 'message',
+                                    qid: queryId
+                                },function(ret,err){
+                                //  alert(ret[i].userid);
+                                //  alert(ret[i].expressname);
+                                //  alert(ret[i].expressnum);
+                                   var messageid=ret[i].id;
+                                //   alert(messageid);
+                                   model.deleteById
+                                   model.deleteById({
+                                       class: 'message',
+                                       id: messageid
+                                   },function(ret,err){
+                                           location.reload();
+                                   });
+                                });
+
+                                model.findAll
+                                model.findAll({
+                                    class: 'received_message',
+                                    qid: queryId
+                                },function(ret,err){
+                                //  alert(i);
+                                 // var message1_id=$api.getStorage('message1_id');
+                                 //alert(ret[i].userid);
+                                // alert(ret[i].expressname);
+                                // alert(ret[i].expressnum);
+                                  var receivedid=ret[i].id;
+                                //  alert(receivedid);
+                                model.deleteById
+                                model.deleteById({
+                                    class: 'received_message',
+                                    id: receivedid
+                                },function(ret,err){
+                                  api.showProgress({
+                                      style: 'default',
+                                      animationType: 'fade',
+                                      title: '努力加载中...',
+                                      text: '先喝杯茶...',
+                                      modal: false
+                                  });
+                                        location.reload();
+                                        api.hideProgress();
+                                });
+
+
+                                });
+
+
+                              }
+
+
+                      });
+
+
+                   }
+              }else{
+
+              }
+          });
+
+      }
 </script>
 </html>
