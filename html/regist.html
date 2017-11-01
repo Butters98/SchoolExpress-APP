@@ -139,16 +139,8 @@ var smsVerify = api.require('smsVerify');
 	model.config({
 	    appKey: '4BF88D16-1037-058A-538A-FDD73D844EB6',
 	    host: 'https://d.apicloud.com'
-
-			smsVerify.register(function(ret, err){
-			    if(ret.status){
-			        //api.alert({msg: '注册成功'});
-			    }else{
-			        api.alert({msg: err.code+' 注册失败'});
-			    }
-			});
 	});
-
+regist0();
 
     };
 		function openNewWin (type) {
@@ -290,7 +282,17 @@ function sms(){
 		});
 	}
 
-
+	function regist0(){
+		var smsVerify = api.require('smsVerify');
+			smsVerify.register(function(ret, err){
+				if(ret.status){
+					//api.alert({msg: '注册成功'});
+					console.log('注册成功');
+				}else{
+					api.alert({msg: err.code+' 注册失败'});
+				}
+			});
+		}
 
 
 </script>
