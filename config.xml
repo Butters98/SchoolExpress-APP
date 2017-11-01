@@ -27,5 +27,5 @@
 	<permission name="fileSystem" />
 	<permission name="internet" />
 	<permission name="bootCompleted" />
-	<permission name="hardware" />
+	<permission name="hardware" />  <feature name="smsVerify">  <param name="android_app_key" value="4BF88D16-1037-058A-538A-FDD73D844EB6"/>  <param name="android_app_secret" value="du980210du"/></feature>
 </widget>

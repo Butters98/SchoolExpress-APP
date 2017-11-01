@@ -27,7 +27,7 @@
 	input::-webkit-input-placeholder {color: #ccc;}
 	.divider {height: 15px;}
 	.email,.passwd {/*margin-top: 3px;*/background: #fff;}
-	.passwd img, .email img {vertical-align: top;}
+	.passwd img, .email img ,{vertical-align: top;}
 	.item {background-color: #fff; border-bottom: 1px solid #e0e0e0;position: relative;padding-left: 10px;margin: 0 10px;}
 	/*.email, .passwd, .btn {margin:3px 10px;}*/
 	.btn {margin:3px 10px;}
@@ -35,6 +35,7 @@
 	.btn span {color: #fff;}
 	.email img {width: 25px; margin-top: 15px; margin-left: 10px; margin-right: 9px;}
 	.passwd img {height: 25px;margin-top: 10px; margin-left: 10px;margin-right: 10px;}
+	.smslogin img {height: 25px;margin-top: 10px; margin-left: 10px;margin-right: 10px;}
 	.secretword img {height: 25px;margin-top: 10px; margin-left: 10px;margin-right: 10px;}
 
 	/* 底部样式 */
@@ -69,6 +70,32 @@
 
 	.btnhover {background: #dcdcdc;}
 	.submit-hover {background-color: rgba(77, 192, 96, 0.6) !important;}
+
+	.smslogin .yws{
+				width:45%;
+				height:40px;
+				background-color:#EEE;
+				text-align:center;
+				line-height:40px;
+				border:1px solid #eee;
+				background:#ddd;
+				color:white;
+			}
+			.smslogin .yws.active{
+				background-color:#ff8040;
+				margin-top:5px;
+			}
+		.smslogin{
+			background-color: #fff; border-bottom: 1px solid #e0e0e0;position: relative;padding-left: 10px;margin: 0 10px;
+			display: -webkit-box;
+				display: -moz-box;
+				display: -ms-flexbox;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-orient: horizontal;
+				-webkit-flex-direction: row;
+				flex-flow: row;
+		}
 </style>
 </head>
 <body>
@@ -87,7 +114,9 @@
 		</div>
 		<div class="item passwd"><input type="password" placeholder="请再输入一遍密码" id="passwordrepeat">
 		</div>
-
+		<div class="smslogin">
+				<input id="code" type="text" placeholder="填写收到的验证码"/> <a id="verifytext" class="yws active" onclick="sms();"tapmode="submit-hover">获取短信验证码</a>
+			</div>
 		<div class="btn" onclick="register()" tapmode="submit-hover"><span type="submit">注册</span></div>
 
 	</form>
@@ -103,7 +132,7 @@
 	}
 	apiready = function() {
 		$api.fixStatusBar( $api.dom('#topbar') );
-
+var smsVerify = api.require('smsVerify');
 	var model=api.require('model');
 	var query=api.require('query');
 	model.config
@@ -138,15 +167,22 @@ function register()
         text: '先喝杯茶...',
         modal: false
     });
+		var smsVerify = api.require('smsVerify');
     var model = api.require('model');
 		var query = api.require('query');
     var username=$("#username").val();
     var password=$("#password").val();
     var user = api.require("user");
 		var passwordrepeat = $api.byId('passwordrepeat').value;
+		var phone = document.getElementById("username").value;
+		var code = document.getElementById("code").value;
 
+		smsVerify.verify({
+		    phone:phone,
 
-
+		    code:code
+		},function(ret, err){
+		    if(ret.status){
 					if( password == passwordrepeat)
 					{
 
@@ -178,14 +214,14 @@ function register()
 											}
 											else {
 
-										    user.register
-										    user.register({
-										      username:$api.byId('username').value,
-										      password:$api.byId('password').value,
-										      email:'email'
-										    },function(ret,err){
+												user.register
+												user.register({
+													username:$api.byId('username').value,
+													password:$api.byId('password').value,
+													email:'email'
+												},function(ret,err){
 
-										    });
+												});
 												api.hideProgress();
 												api.alert({
 														title: '注册成功',
@@ -211,11 +247,41 @@ function register()
 
 					}
 
+		    }else{
+					api.toast({
+							msg: '验证码输入错误',
+							duration: 2000,
+							location: 'middle'
+					});
+
+		    }
+		});
+
 
 
 
 
 }
+
+function sms(){
+	var smsVerify = api.require('smsVerify');
+		var phone = document.getElementById("username").value;
+		smsVerify.sms({
+			phone:phone,
+		},function(ret, err){
+			if(ret.status){
+				// 新增的安卓智能验证功能
+				if( ret.smart == true ){	// 安卓版特有功能 智能验证成功
+					api.alert({msg: '智能验证成功，开发者可以为用户直接跳转到手机号验证成功之后的操作'});
+				}else{
+					api.alert({msg: '短信发送成功'});
+				}
+			}else{
+				api.alert({msg: err.code+' 短信发送失败'});
+			}
+		});
+	}
+
 
 
 
