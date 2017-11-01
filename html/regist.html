@@ -139,6 +139,14 @@ var smsVerify = api.require('smsVerify');
 	model.config({
 	    appKey: '4BF88D16-1037-058A-538A-FDD73D844EB6',
 	    host: 'https://d.apicloud.com'
+
+			smsVerify.register(function(ret, err){
+			    if(ret.status){
+			        //api.alert({msg: '注册成功'});
+			    }else{
+			        api.alert({msg: err.code+' 注册失败'});
+			    }
+			});
 	});
 
 
