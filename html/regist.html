@@ -115,7 +115,7 @@
 		<div class="item passwd"><input type="password" placeholder="请再输入一遍密码" id="passwordrepeat">
 		</div>
 		<div class="smslogin">
-				<input id="code" type="text" placeholder="填写收到的验证码"/> <a id="verifytext" class="yws active" onclick="sms();"tapmode="submit-hover" value="获取短信验证码"></a>
+				<input id="code" type="text" placeholder="填写收到的验证码"/> <a id="verifytext" class="yws active" onclick="sms();"tapmode="submit-hover">获取短信验证码</a>
 			</div>
 		<div class="btn" onclick="register()" tapmode="submit-hover"><span type="submit">注册</span></div>
 
@@ -271,8 +271,13 @@ function register()
 function sms(){
 	curCount = count;
 　　//设置button效果，开始计时
-   $("#verifytext").attr("disabled", "true");
-   $("#verifytext").val("请在" + curCount + "秒内输入验证码");
+  verifytext.style.background="#C0C0C0";
+	verifytext.style.color="black";
+
+document.getElementById("verifytext").onclick=function(){};
+document.getElementById("verifytext").innerHTML= + curCount + "秒重新发送";
+  // $("#verifytext").attr("disabled", "true");
+//   $("#verifytext").innerHTML("请在" + curCount + "秒内输入验证码");
    InterValObj = window.setInterval(SetRemainTime, 1000);
 
 	var smsVerify = api.require('smsVerify');
@@ -312,12 +317,16 @@ function sms(){
 		function SetRemainTime() {
 		      if (curCount == 0) {
 		        window.clearInterval(InterValObj);//停止计时器
-		        $("#verifytext").removeAttr("disabled");//启用按钮
-		        $("#verifytext").val("重新发送验证码");
+						verifytext.style.background="#ff8040";
+						verifytext.style.color="white";
+						document.getElementById("verifytext").onclick=function(){sms();};
+						document.getElementById("verifytext").innerHTML="重新发送验证码";
+		    //    $("#verifytext").removeAttr("disabled");//启用按钮
+		    //    $("#verifytext").innerHTML("重新发送验证码");
 		      }
 		      else {
 		        curCount--;
-		        $("#verifytext").val("请在" + curCount + "秒内输入验证码");
+		      document.getElementById("verifytext").innerHTML=+ curCount + "秒重新发送";
 		      }
 		    }
 
