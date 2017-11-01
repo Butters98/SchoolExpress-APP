@@ -290,7 +290,11 @@ document.getElementById("verifytext").innerHTML= + curCount + "秒重新发送";
 				if( ret.smart == true ){	// 安卓版特有功能 智能验证成功
 					api.alert({msg: '智能验证成功'});
 				}else{
-					api.alert({msg: '短信发送成功'});
+					api.toast({
+							msg: '短信发送成功',
+							duration: 2000,
+							location: 'middle'
+					});
 				}
 			}else{
 				api.alert({msg: err.code+' 短信发送失败'});
@@ -303,13 +307,9 @@ document.getElementById("verifytext").innerHTML= + curCount + "秒重新发送";
 			smsVerify.register(function(ret, err){
 				if(ret.status){
 					//api.alert({msg: '注册成功'});
-					api.toast({
-							msg: '注册成功',
-							duration: 2000,
-							location: 'middle'
-					});
+
 				}else{
-					api.alert({msg: err.code+' 注册失败'});
+			//		api.alert({msg: err.code+' 注册失败'});
 				}
 			});
 		}
