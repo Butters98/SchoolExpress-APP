@@ -45,11 +45,6 @@
 
     </div>
 
-    <nav class="navbar">
-       <a id="navbar-item-recommend" class="navbar-item navbar-item-active" tapmode="navbar-item-hov" onclick="openNewFrame('floatlist01')">全部公司<img src="../image/pager_tab_menu_indicator.png" alt=""></a><div class="vdvidider"></div>
-       <a id="navbar-item-rank" class="navbar-item navbar-item-active" tapmode="navbar-item-hov" onclick="openNewFrame('floatlist02')">默认排序<img src="../image/pager_tab_menu_indicator.png" alt=""></a><div class="vdvidider"></div>
-
-   </nav>
 
 
 </body>
@@ -86,18 +81,18 @@
     }
 
     apiready = function() {
-    
+
 
 		$api.fixStatusBar( $api.dom('#topbar') );
         var headerHeight = $api.dom('#topbar').offsetHeight;
-        var scrollHeight = $api.dom('.navbar').offsetHeight;
+
 
         api.openFrame ({
             name: 'discount_body',
             url: './discount_body.html',
             rect:{
                 x:0,
-                y:headerHeight + scrollHeight,
+                y:headerHeight ,
                 w:'auto',
                 h:'auto'
             }
