@@ -95,7 +95,7 @@
             <div class="itemlogo userlogo"><img src="../image/shopcover/lihua.jpeg" alt=""></div>
             <div class="itemshelf">
                 <div class="shelfinfo01"id="message_010">快递公司:</div>
-                
+
                 <div class="shelfinfo03"id="message_030">姓名:</div>
                 <div class="shelfinfo04"id="message_040">手机号:</div>
                 <div class="shelfinfo05"id="message_050">宿舍号:</div>
@@ -234,7 +234,7 @@ var user_id=$api.getStorage('user_id');
                   qid: queryId
               },function(ret,err){
                 var a1_01 = $api.byId('message_010');//获取到需要填充的div
-                var a1_02 = $api.byId('message_020');
+
                 var a1_03 = $api.byId('message_030');
                 var a1_04 = $api.byId('message_040');
                 var a1_05 = $api.byId('message_050');
@@ -242,7 +242,7 @@ var user_id=$api.getStorage('user_id');
 
                 if(ret[i].userid!=user_id)
                   {   $api.append(a1_01,"<div>"+ret[i].expressname+"</div>");
-                     $api.append(a1_02,"<div>"+ret[i].expressnum+"</div>");
+
                        $api.append(a1_03,"<div>"+ret[i].name+"</div>");
                         $api.append(a1_04,"<div>"+ret[i].phonenum+"</div>");
                          $api.append(a1_05,"<div>"+ret[i].dormnum+"</div>");
@@ -332,7 +332,11 @@ var user_id=$api.getStorage('user_id');
                                 receiverid:user_id
                               }
                           },function(ret,err){
-
+                            api.toast({
+                                msg: '接单成功',
+                                duration: 2000,
+                                location: 'middle'
+                            });
                           });
 
                         });
